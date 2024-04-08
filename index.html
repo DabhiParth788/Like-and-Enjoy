@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <style>
+        .detailscontainer{
+            /* background-color: red; */
+            background: linear-gradient(to bottom, transparent, rgb(0, 0, 0, 0.9));
+        }
+    </style>
+</head>
+<body>
+    <div class="w-full h-screen bg-black">
+        <div class="imagecontainer w-full h-screen relative text-white overflow-hidden">
+            <div  class="maincard z-[3] w-[110%] h-[110%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute ">
+                <img class="w-full h-full object-cover" src="" alt="Image" srcset="">
+            </div>
+            <div class="incomingcard z-[2] w-[110%] h-[110%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute ">
+                <img class="w-full h-full object-cover" src="" alt="incomingcard Image" srcset="">
+            </div>
+        </div>
+        <div class="absolute top-0 left-0 z-[4] w-full h-screen  flex flex-col justify-between">
+            <div class=" px-5 py-6 navbar flex justify-between items-center text-white">
+                <div class="prflimg w-[3.2rem] h-[3.2rem] rounded-full bg-red-600 overflow-hidden">
+                    <img class="object-cover w-[3.2rem] h-[3.2rem]" src="images/profile1.JPG" alt="Profile Picture" srcset="">
+                </div>
+                <h3 class="font-medium text-xl tracking-tight">Awesome People</h3>
+                <div class="chaticon relative flex items-center justify-center w-[3.2rem] h-[3.2rem] rounded-full bg-white/20">
+                    <i class="fa-solid fa-comments fa-lg opacity-100"></i>
+                    <div  class="flex items-center justify-center rounded-full badge absolute w-5 h-5 bg-[#FC5149] top-0 right-0 translate-x-[0px]">
+                        <h5 class="text-xs font-medium"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="detailscontainer w-full ">
+                <div class="details px-5 py-6 w-full">
+                    <div class="element location flex gap-4">
+                        <i class="fa-solid fa-arrow-turn-up flex items-center justify-center rounded-full bg-white w-[1.6rem] h-[1.6rem]"></i>
+                        <h3 class="text-white font-semibold">Location</h3>
+                    </div>
+                    <div class="element name flex gap-5 text-white mt-1">
+                        <h1 class="font-regular tracking-tighter text-6xl">Name</h1>
+                        <h1 class="font-regular tracking-tighter text-6xl opacity-50">Age</h1>
+                    </div>
+                    <div class="element tags flex gap-3 text-white mt-4">
+                        <div class="tag flex items-center bg-white/30 px-3 py-1 rounded-full gap-3">
+                            <i class="fa-solid fa-cube fa-sm"></i>
+                            <h3 class="text-sm tracking-tight">Hobbies 1</h3>
+                        </div>
+                        <div class="tag flex items-center bg-white/30 px-3 py-1 rounded-full gap-3">
+                            <i class="fa-solid fa-cube fa-sm"></i>
+                            <h3 class="text-sm tracking-tight">Hobbies 2</h3>
+                        </div>
+                        <div class="tag flex items-center bg-white/30 px-3 py-1 rounded-full gap-3">
+                            <i class="fa-solid fa-cube fa-sm"></i>
+                            <h3 class="text-sm tracking-tight">Hobbies 3</h3>
+                        </div>
+                    </div>
+                    <div class="element bio text-white/80 mt-5">
+                        <h3 class="text-xl font-semibold">Bio</h3>
+                        <p class="text-lg mt-2">About </p>
+                    </div>
+                    <div class="element flex items-start mt-10 gap-2">
+                        <button class="deny py-3 w-1/2 bg-white rounded-xl">
+                            <i class="fa-solid fa-xmark fa-2xl"></i>
+                        </button>
+                        <button class="accept py-3 w-1/2 bg-[#FC5149] rounded-xl">
+                            <i class="fa-solid fa-heart fa-2xl" style="color: white;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="webpageJs.js"></script>
+</body>
+</html>
