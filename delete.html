@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Random Animation with GSAP — Learn With Jason</title>
+	</head>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap");
+
+:root {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+		Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	line-height: 1.45;
+}
+
+body {
+	margin: 0;
+}
+
+.container {
+	aspect-ratio: 1600 / 900;
+	/* background: url(https://res.cloudinary.com/jlengstorf/image/upload/f_auto,q_auto/v1677647802/lwj/demo/gsap-bg.jpg); */
+	/* background-size: contain; */
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100vh;
+
+}
+
+.container h1 {
+	color: #161420;
+	font-family: "SF Pro", sans-serif;
+	font-size: 3.75vw;
+	font-variation-settings: "wght" 700, "wdth" 130;
+	line-height: 1.1;
+	position: absolute;
+	right: 7%;
+	text-align: right;
+	text-shadow: 1px 2px 4px #16142066;
+	top: 28%;
+	width: 50%;
+}
+
+.container h1 em {
+	display: block;
+	font-family: "Josefin Sans", sans-serif;
+	font-variation-settings: "wght" 800;
+	font-size: 2.9em;
+	font-style: normal;
+	line-height: 0.8;
+	text-transform: uppercase;
+}
+
+.button {
+	background: hotpink;
+	border: none;
+	border-radius: 0.25rem;
+	display: block;
+	font-family: "Josefin Sans", sans-serif;
+	font-size: 2.25vw;
+	font-weight: bold;
+	margin: 1rem auto;
+	padding: 1rem 1.5rem 0.625rem;
+	position: absolute;
+	right: 7%;
+	text-transform: uppercase;
+	top: 64%;
+	z-index: 20;
+}
+
+.cutout {
+	position: relative;
+	width: 100%;
+	z-index: 10;
+}
+
+.heart {
+	bottom: calc(-1 * min(50px, 10vw));
+	left: 0;
+	mix-blend-mode: multiply;
+	position: absolute;
+}
+
+/* img{
+    height: 500px;
+    width: 500px;
+} */
+    </style>
+	<body>
+		<div class="container">
+			<h1><em>Donuts</em> can be dinner if you choose to believe</h1>
+
+			<button class="button">Click to Support Donuts</button>
+			<!-- <img
+				class="cutout"
+				src="https://res.cloudinary.com/jlengstorf/image/upload/f_auto,q_auto/v1677647800/lwj/demo/gsap-donuts.png"
+				alt="A stack of donuts"
+			/> -->
+		</div>
+
+		<template id="heart">
+			<img src="images/heart.png" alt="heart" class="heart" />
+		</template>
+
+		<!-- <script type="module" src="main.js"></script> -->
+        <script type="module">
+            // import { gsap } from "https://cdn.skypack.dev/gsap";
+        
+            // const button = document.querySelector(".button");
+            // const container = document.querySelector(".container");
+            // const heartTemplate = document.querySelector("#heart");
+        
+            // button.addEventListener("click", () => {
+            //     const heart = heartTemplate.content.firstElementChild.cloneNode(true);
+            //     container.appendChild(heart);
+        
+            //     gsap.to(heart, {
+            //         duration: 5,
+            //         x: () => Math.random() * window.innerWidth,
+            //         y: () => Math.random() * window.innerHeight,
+            //         rotation: () => Math.random() * 60,
+            //         opacity: 0,
+            //         onComplete: () => {
+            //             container.removeChild(heart);
+            //         }
+            //     });
+            // });
+			// import { gsap } from "https://cdn.jsdelivr.net/npm/gsap";
+// import { MotionPathPlugin } from "gsap/all";
+// import "./style.css";
+
+// gsap.registerPlugin(MotionPathPlugin);
+import { gsap } from "./gsap-public/src/gsap-core.js";
+    
+import { MotionPathPlugin } from "./gsap-public/src/MotionPathPlugin.js";
+
+
+
+gsap.registerPlugin(MotionPathPlugin);
+
+const heartTemplate = document.querySelector("#heart");
+const container = document.querySelector(".imagecontainer");
+const button = document.querySelector(".accept");
+const endY = container.clientHeight * -1.2;
+const w = container.clientWidth;
+
+button.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const heart = heartTemplate.content.firstElementChild.cloneNode(true);
+    const width = gsap.utils.random(40, 70);
+    const initialX = gsap.utils.random(0, w - width);
+    const floatDirection = gsap.utils.random([-1, 1]);
+
+    const getNextX = (dir) => gsap.utils.random(initialX, initialX + 200 * dir);
+
+    gsap.set(heart, {
+        width: width,
+        x: initialX,
+    });
+
+    container.appendChild(heart);
+
+    gsap.to(heart, {
+        duration: 2,
+        motionPath: {
+            autoRotate: 90,
+            curviness: 1.25,
+            path: [
+                {
+                    x: getNextX(floatDirection),
+                    y: endY / gsap.utils.random(2, 4),
+                },
+                {
+                    x: getNextX(floatDirection * -1), // reverse float direction
+                    y: endY,
+                },
+            ],
+        },
+        onComplete: () => {
+            container.removeChild(heart);
+        },
+    });
+});
+ 
+        </script>
+        
+	</body>
+</html>
