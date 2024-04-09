@@ -216,7 +216,7 @@ deny.addEventListener("click", () => {
 // 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
 // heart animation
-import { gsap } from "./node_modules/gsap/index.js";
+import gsap from "./gsap-public/esm/gsap-core.js";
 import { MotionPathPlugin } from "./node_modules/gsap/MotionPathPlugin.js";
 gsap.registerPlugin(MotionPathPlugin);
 
