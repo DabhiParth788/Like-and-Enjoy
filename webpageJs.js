@@ -102,15 +102,16 @@ let curr = 0;
 let isAnimating = false;
 
 function setData(index) {
-  console.log("curr in setdata", index);
   document.querySelector(".badge h5").textContent = users[index].pendingMessage;
   document.querySelector(".location  h3").textContent = users[index].location;
-  document.querySelector(".name h1:nth-child(1)").textContent = users[index].name;
-  document.querySelector(".name h1:nth-child(2)").textContent = users[index].age;
+  document.querySelector(".name h1:nth-child(1)").textContent =
+    users[index].name;
+  document.querySelector(".name h1:nth-child(2)").textContent =
+    users[index].age;
 
   var clutter = "";
   users[index].interests.forEach(function (interest) {
-    clutter += `<div class="tag flex items-center bg-white/30 px-3 py-1 rounded-full gap-3">${interest.icon} <h3 class="text-sm tracking-tight capitalize">${interest.interest}</h3> </div>`; 
+    clutter += `<div class="tag flex items-center bg-white/30 px-3 py-1 rounded-full gap-3">${interest.icon} <h3 class="text-sm tracking-tight capitalize">${interest.interest}</h3> </div>`;
   });
   document.querySelector(".tags").innerHTML = clutter;
   document.querySelector(".bio p").textContent = users[index].bio;
@@ -136,7 +137,7 @@ function imageChange() {
     let tl = gsap.timeline({
       onComplete: function () {
         isAnimating = false;
-        console.log("curr after animation",curr);
+        console.log("curr after animation", curr);
         let main = document.querySelector(`.maincard`);
         let incoming = document.querySelector(".incomingcard");
 
@@ -190,7 +191,7 @@ let accept = document.querySelector(`.accept`);
 deny.addEventListener("click", () => {
   // console.log("deny Clicked");
   imageChange();
-  setData(curr-1);
+  setData(curr - 1);
 
   // Details animation
   gsap.from(".details .element", {
@@ -206,8 +207,108 @@ deny.addEventListener("click", () => {
 (function containerCreator() {
   document.querySelectorAll(".element").forEach(function (element) {
     let div = document.createElement("div");
-    div.classList.add(`${element.classList[1]}container`,"overflow-hidden");
+    div.classList.add(`${element.classList[1]}container`, "overflow-hidden");
     div.appendChild(element);
     document.querySelector(".details").appendChild(div);
   });
 })();
+
+// 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+// heart animation
+import { gsap } from "../node_modules/gsap/index.js";
+import { MotionPathPlugin } from "../node_modules/gsap/MotionPathPlugin.js";
+gsap.registerPlugin(MotionPathPlugin);
+
+const heartTemplate = document.querySelector("#heart");
+const container = document.querySelector(".screen");
+const button = document.querySelector(".accept");
+const endY = container.clientHeight * -1.2;
+const w = container.clientWidth;
+
+document.addEventListener("DOMContentLoaded", function () {
+  var intervalID;
+  var isAnimating = false; // Assuming isAnimating is a global variable defined elsewhere
+
+  // Define createAndAnimateHeart function globally
+  const createAndAnimateHeart = () => {
+    const heart = heartTemplate.content.firstElementChild.cloneNode(true);
+    const width = gsap.utils.random(20, 40);
+    const initialX = gsap.utils.random(0, w - width);
+    const floatDirection = gsap.utils.random([-1, 1]);
+
+    const getNextX = (dir) => {
+      return gsap.utils.random(initialX, initialX + 200 * dir);
+    };
+
+    gsap.set(heart, {
+      width: width,
+      x: initialX,
+    });
+    heart.classList.add(`z-[20]`, `absolute`);
+    container.appendChild(heart);
+
+    gsap.to(heart, {
+      duration: 6,
+      motionPath: {
+        autoRotate: 90,
+        path: [
+          {
+            x: getNextX(floatDirection),
+            y: endY / gsap.utils.random(2, 4),
+          },
+          {
+            x: getNextX(floatDirection * -1),
+            y: endY,
+          },
+        ],
+      },
+      onStart: () => {
+        music.play();
+        console.log("Playing music");
+      },
+      onComplete: () => {
+        isAnimating = false;
+        container.removeChild(heart);
+        // music.pause();
+        // console.log("Stopped music");
+      },
+    });
+  };
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    clearInterval(intervalID); // clear existing interval
+
+    // Start animation every 100ms until n seconds (n000ms) have passed
+    let elapsedTime = 0;
+    intervalID = setInterval(() => {
+      if (elapsedTime < 6000) {
+        createAndAnimateHeart();
+        elapsedTime += 100; // increment elapsed time by 100ms
+      } else {
+        clearInterval(intervalID); // stop interval after n seconds
+      }
+    }, 100);
+  });
+});
+
+// Music
+document.addEventListener("DOMContentLoaded", function () {
+  var music = document.getElementById("music");
+  var playButton = document.querySelector(".accept");
+
+  playButton.addEventListener("click", function () {
+    // alert('lol');
+    if (isAnimating) {
+      music.play();
+      // playButton.textContent = "Pause Music";
+      console.log("Playing music");
+    }
+    if (!isAnimating) {
+      music.pause();
+      console.log("stop music");
+      // playButton.textContent = "Play Music";
+    }
+  });
+});
